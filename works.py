@@ -28,7 +28,7 @@ YESTERDAY = datetime.datetime.now() - datetime.timedelta(days=1)
 # will show the task as failed, as well as contain all of the task logs
 # required to debug.
 with models.DAG(
-        dag_id='smrun',
+        dag_id='composer_sample_kubernetes_pod',
         schedule_interval=datetime.timedelta(days=1),
         start_date=YESTERDAY) as dag:
     # Only name, namespace, image, and task_id are required to create a
@@ -45,6 +45,7 @@ with models.DAG(
         name='pod-ex-minimum',
         # Entrypoint of the container, if not specified the Docker container's
         # entrypoint is used. The cmds parameter is templated.
+        cmds=['echo'],
         # The namespace to run within Kubernetes, default namespace is
         # `default`. There is the potential for the resource starvation of
         # Airflow workers and scheduler within the Cloud Composer environment,
@@ -56,5 +57,4 @@ with models.DAG(
         # qualified URLs will point to a custom repository. Supports private
         # gcr.io images if the Composer Environment is under the same
         # project-id as the gcr.io images.
-        image='gcr.io/gcp-runtimes/ubuntu_16_0_4',
-        cmds=["python","/SM/long_scrape_sm.py"])
+        image='gcr.io/gcp-runtimes/ubuntu_16_0_4')
