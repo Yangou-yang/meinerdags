@@ -20,7 +20,7 @@ dag = DAG(
 
 passing = KubernetesPodOperator(namespace='default',
                           image="gcr.io/blume-platform-data-nw-nonprod/rpamanager",
-                          cmds=["python","long_scrape_sm.py"],
+                          cmds=["python","/SM/long_scrape_sm.py"],
                           labels={"airflow1": "smline"},
                           name="smline",
                           task_id="smline",
